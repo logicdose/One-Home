@@ -36,6 +36,7 @@
   /* Z-indexes */
   --z-dialog: 1000;
   --z-edit-mode-overlay: 900;
+  --z-edit-mode-overlay-dropdown: 901;
 }
 
 * {

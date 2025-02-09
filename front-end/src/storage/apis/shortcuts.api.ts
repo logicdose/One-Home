@@ -54,4 +54,9 @@ export default abstract class StorageApi {
     // Save shortcuts to storage
     localStorage.setItem("shortcuts", JSON.stringify(newShortcuts));
   }
+
+  static async saveShortcuts(shortcuts: ShortcutItem[]): Promise<void> {
+    // Save shortcuts to storage
+    localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+  }
 }

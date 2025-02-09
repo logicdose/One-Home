@@ -19,7 +19,12 @@ export default function Shortcuts() {
     const [shortcuts, setShortcuts] = useState<ShortcutItem[]>([]);
 
     // Drag State
-    // const [dragItem, setDragItem] = useState<ShortcutItem | undefined>(undefined);
+    const [dragItem, setDragItem] = useState<ShortcutItem | undefined>(undefined);
+    const [dragX, setDragX] = useState(0);
+    const [dragY, setDragY] = useState(0);
+    const [dropIndex, setDropIndex] = useState(-1);
+    const [dropX, setDropX] = useState(0);
+    const [dropY, setDropY] = useState(0);
 
     // Methods
     const addShortcut = async (icon: string, title: string, url: string) => {
@@ -51,6 +56,34 @@ export default function Shortcuts() {
         ));
     };
 
+    const getDropIndex = (x: number, y: number) => {
+        const dropIndex = shortcuts.findIndex((shortcut) => {
+            const rect = document.getElementById(`shortcut-${shortcut.index}`)?.getBoundingClientRect();
+            if (rect) {
+                return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+            }
+            return false;
+        });
+
+        return dropIndex;
+    }
+
+    const getDropX = (index: number) => {
+        const rect = document.getElementById(`shortcuts`)?.getBoundingClientRect();
+        if (rect) {
+            return 120 * (index % 5);
+        }
+        return 0;
+    }
+
+    const getDropY = (index: number) => {
+        const rect = document.getElementById(`shortcuts`)?.getBoundingClientRect();
+        if (rect) {
+            return 120 * Math.floor(index / 5);
+        }
+        return 0;
+    }
+
     // Effects
     useEffect(() => {
         loadShortcuts();
@@ -74,12 +107,65 @@ export default function Shortcuts() {
             </Dialog>
 
             {/* Shortcuts */}
-            <div className="shortcuts">
+            <div
+                id="shortcuts"
+                className="shortcuts"
+                onPointerMove={(e) => {
+                    if (dragItem) {
+                        const dx = e.clientX;
+                        const dy = e.clientY;
+
+                        // Set new position
+                        setDragX(e.clientX);
+                        setDragY(e.clientY);
+
+                        // Get drop index
+                        const dropIndex = getDropIndex(dx, dy);
+                        setDropIndex(dropIndex);
+
+                        // Get drop position
+                        const dropX = getDropX(dropIndex);
+                        const dropY = getDropY(dropIndex);
+
+                        console.log(`Drop Index: ${dropIndex}`);
+
+                        setDropX(dropX);
+                        setDropY(dropY);
+                    }
+                }}
+                onPointerUp={() => {
+                    if (dragItem) {
+                        // Drop item
+                        if (dropIndex !== -1) {
+                            // Re-arange shortcuts
+                            const newShortcuts = [...shortcuts];
+                            newShortcuts.splice(shortcuts.indexOf(dragItem), 1);
+                            newShortcuts.splice(dropIndex, 0, dragItem);
+
+                            // Update indexes
+                            newShortcuts.forEach((shortcut, index) => {
+                                shortcut.index = index + 1;
+                            });
+
+                            // Save shortcuts
+                            StorageApi.saveShortcuts(newShortcuts);
+
+                            // Update state
+                            setShortcuts(newShortcuts);
+                        }
+
+                        // Reset drag item
+                        setDragItem(undefined);
+                        setDropIndex(-1);
+                    }
+                }}
+            >
                 {
                     shortcuts.map((shortcut) => {
                         return (
-                            <div className="shortcut-container" key={shortcut.index}>
+                            <div className="shortcut-container" key={shortcut.title}>
                                 <a
+                                    id={`shortcut-${shortcut.index}`}
                                     className="shortcut"
                                     href={shortcut.url}
                                 >
@@ -98,10 +184,14 @@ export default function Shortcuts() {
                                 {editMode && (
                                     <div
                                         className="edit-mode-overlay"
-                                        onDrag={(e) => {
-                                            // setDragItem(shortcut);
+                                        onPointerDown={(e) => {
+                                            setDragItem(shortcut);
 
-                                            console.log("Drag", e);
+                                            // Set initial position
+                                            setDragX(e.clientX);
+                                            setDragY(e.clientY);
+
+                                            console.log("Pointer Down");
                                         }}
                                     >
                                         <div className="content">
@@ -137,6 +227,38 @@ export default function Shortcuts() {
                                 Add
                             </div>
                         </button>
+                    </div>
+                )}
+
+                {/* Drop Item */}
+                {dropIndex !== -1 && (
+                    <div
+                        className="drop-item"
+                        style={{
+                            top: dropY + 5,
+                            left: dropX + 5,
+                        }}
+                    />
+                )}
+
+                {/* Drag Item */}
+                {dragItem && (
+                    <div
+                        className="drag-item"
+                        style={{
+                            top: dragY - 70,
+                            left: dragX - 50,
+                        }}
+                    >
+                        <div className="icon">
+                            {dragItem.favIcon && (
+                                <img src={dragItem.favIcon} alt={dragItem.title} />
+                            )}
+                        </div>
+                        <Spacer height={6} />
+                        <div>
+                            {dragItem.title}
+                        </div>
                     </div>
                 )}
             </div>

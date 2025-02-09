@@ -9,6 +9,7 @@ import SearchImageApi from '../../storage/apis/search-image.api';
 export default function SearchEngine() {
     // State
     const editMode = useAppSelector((state) => state.edit.editMode)
+    const showSearchImage = useAppSelector((state) => state.config.showSearchImage)
 
     // Image
     const [image, setImage] = useState('')
@@ -72,46 +73,48 @@ export default function SearchEngine() {
     return (
         <div className='search-engine'>
             <Spacer height={16} />
-            <div className='logo'>
-                {image ? (
-                    <img src={image} alt='One Home' />
-                ) : (
-                    <img src={SearchEngineImage} alt='One Home' />
-                )}
+            {showSearchImage && (
+                <div className='logo'>
+                    {image ? (
+                        <img src={image} alt='One Home' />
+                    ) : (
+                        <img src={SearchEngineImage} alt='One Home' />
+                    )}
 
 
-                {/* Edit Mode Overlay */}
-                {editMode && (
-                    <>
-                        {/* Pick Button */}
-                        {!image && (
-                            <div
-                                className='edit-mode-overlay'
-                                onClick={() => pickImage()}
-                            >
-                                <ImageRounded />
-                                <Spacer width={12} />
-                                <span>Pick Image</span>
-                            </div>
-                        )}
+                    {/* Edit Mode Overlay */}
+                    {editMode && (
+                        <>
+                            {/* Pick Button */}
+                            {!image && (
+                                <div
+                                    className='edit-mode-overlay'
+                                    onClick={() => pickImage()}
+                                >
+                                    <ImageRounded />
+                                    <Spacer width={12} />
+                                    <span>Pick Image</span>
+                                </div>
+                            )}
 
-                        {/* Remove Button */}
-                        {image && (
-                            <div
-                                className='edit-mode-overlay remove'
-                                onClick={() => {
-                                    setImage('')
-                                    SearchImageApi.removeImage()
-                                }}
-                            >
-                                <ImageRounded />
-                                <Spacer width={12} />
-                                <span>Remove Image</span>
-                            </div>
-                        )}
-                    </>
-                )}
-            </div>
+                            {/* Remove Button */}
+                            {image && (
+                                <div
+                                    className='edit-mode-overlay remove'
+                                    onClick={() => {
+                                        setImage('')
+                                        SearchImageApi.removeImage()
+                                    }}
+                                >
+                                    <ImageRounded />
+                                    <Spacer width={12} />
+                                    <span>Remove</span>
+                                </div>
+                            )}
+                        </>
+                    )}
+                </div>
+            )}
 
             <Spacer height={32} />
             <form onSubmit={handleSubmit}>

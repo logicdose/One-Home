@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface EditState {
   editMode: boolean;
+  appBackground?: string;
 }
 
 const initialState: EditState = {
   editMode: false,
+  appBackground: undefined,
 };
 
 export const editState = createSlice({
@@ -15,8 +17,11 @@ export const editState = createSlice({
     setEditMode: (state, action) => {
       state.editMode = action.payload;
     },
+    setAppBackground: (state, action) => {
+      state.appBackground = action.payload;
+    },
   },
 });
 
-export const { setEditMode } = editState.actions;
+export const { setEditMode, setAppBackground } = editState.actions;
 export default editState.reducer;

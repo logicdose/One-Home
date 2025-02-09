@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import editState from "../states/edit-state";
+import configState from "../states/config-state";
 // ...
 
 const store = configureStore({
   reducer: {
     edit: editState,
+    config: configState,
   },
 });
 

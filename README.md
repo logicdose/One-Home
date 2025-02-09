@@ -7,7 +7,11 @@
 - **Minimalistic Design**: One Home is designed to be simple and clean, with a focus on usability. 👨‍🎨
 - **Customizable**: You can customize the background, colors, links and grid to make it your own. 🎨
 - **Responsive**: One Home is designed to work on all devices, from desktops to mobile phones. 📱
-- **Open Source**: One Home is open source and free to use. You can contribute to the project on [GitHub](
+- **Open Source**: One Home is open source and free to use. You can contribute to the project on [GitHub](https://github.com/logicdose/One-Home.git)
+
+## Change Log 📝
+
+View the [CHANGELOG.md](CHANGELOG.md) file to see the changes made in each version of `One Home`.
 
 ## Direct Installation 🚀
 
