@@ -1,0 +1,45 @@
+.size-editor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  transition: border-color 0.25s ease-in-out;
+  margin: 0 auto;
+  position: relative;
+}
+
+.size-editor.edit-mode {
+  border: 2px solid var(--color-surface-dark);
+}
+
+.size-editor.edit-mode:hover {
+  border: 2px solid var(--color-primary);
+}
+
+.size-editor .control {
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-surface-dark);
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: background-color 0.25s ease-in-out;
+}
+
+.size-editor .control.left {
+  left: -10px;
+}
+
+.size-editor .control.right {
+  right: -10px;
+}
+
+.size-editor:hover .control {
+  background-color: var(--color-primary);
+}
