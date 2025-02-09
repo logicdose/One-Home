@@ -1,10 +1,11 @@
 import { ReactNode } from "react";
 import "./dialog.css";
-import Button from "../button/button";
+import { CloseRounded } from "@mui/icons-material";
 
 type Props = {
     children: ReactNode;
     title: string;
+    showClose?: boolean;
     open: boolean;
     onClose: () => void;
 };
@@ -24,11 +25,15 @@ export default function Dialog(props: Props) {
                             {props.title}
                         </h3>
 
-                        <Button
+                        <button
+                            className="close"
+                            style={{
+                                display: (props.showClose ?? true) ? "block" : "none"
+                            }}
                             onClick={props.onClose}
                         >
-                            Close
-                        </Button>
+                            <CloseRounded />
+                        </button>
                     </div>
                     <div>
                         {props.children}

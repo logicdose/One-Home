@@ -96,6 +96,7 @@ export default function Shortcuts() {
             <Dialog
                 title="Add Shortcut"
                 open={addShortcutDialogOpen}
+                showClose={false}
                 onClose={() => setAddShortcutDialogOpen(false)}
             >
                 <AddShortcutDialog
@@ -103,6 +104,7 @@ export default function Shortcuts() {
                         addShortcut(icon, title, url);
                         setAddShortcutDialogOpen(false);
                     }}
+                    onClose={() => setAddShortcutDialogOpen(false)}
                 />
             </Dialog>
 
@@ -126,8 +128,6 @@ export default function Shortcuts() {
                         // Get drop position
                         const dropX = getDropX(dropIndex);
                         const dropY = getDropY(dropIndex);
-
-                        console.log(`Drop Index: ${dropIndex}`);
 
                         setDropX(dropX);
                         setDropY(dropY);
@@ -183,15 +183,13 @@ export default function Shortcuts() {
                                 {/* Edit Mode Overlay */}
                                 {editMode && (
                                     <div
-                                        className="edit-mode-overlay"
+                                        className={"edit-mode-overlay " + (dragItem ? "dragging" : "")}
                                         onPointerDown={(e) => {
                                             setDragItem(shortcut);
 
                                             // Set initial position
                                             setDragX(e.clientX);
                                             setDragY(e.clientY);
-
-                                            console.log("Pointer Down");
                                         }}
                                     >
                                         <div className="content">
@@ -200,7 +198,12 @@ export default function Shortcuts() {
                                                 </button> */}
                                             <Spacer width={4} />
                                             <button
-                                                onClick={() => removeShortcut(shortcut.index)}
+                                                onClick={(e) => {
+                                                    console.log(`Remove Shortcut: ${shortcut.index}`);
+                                                    e.preventDefault();
+                                                    removeShortcut(shortcut.index)
+                                                }}
+                                                onPointerDown={(e) => e.stopPropagation()}
                                             >
                                                 <CloseRounded />
                                             </button>

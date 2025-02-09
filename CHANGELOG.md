@@ -2,7 +2,14 @@
 
 ## Unreleased
 
-### v0.0.2
+### v0.2.1
+
+**Released:** 2025 Feb, 10
+
+- Improved `Add Shortcut` dialog.
+- Improved `Shortcuts` re-arrenge feature.
+
+### v0.2.0
 
 **Released:** 2025 Feb, 9
 

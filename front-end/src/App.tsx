@@ -50,6 +50,7 @@ function App() {
             <SearchEngine />
             <Spacer height={64} />
             <Shortcuts />
+            <Spacer height={128} />
           </div>
         </div>
       </div>

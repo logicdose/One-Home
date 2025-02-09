@@ -1,0 +1,16 @@
+.alert {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 12px 16px;
+  background-color: var(--color-error-soft);
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
+  border-radius: 16px;
+  width: 100%;
+}
+
+.alert .alert-message {
+  color: var(--color-text);
+}
