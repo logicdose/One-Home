@@ -2,7 +2,7 @@
 
 `One Home` is a simple and modern `New Tab` page for your browser. It is designed to be a minimalistic and distraction-free start page for your browser, but customizable enough to be useful for everyone.
 
-<video src='./assets/videos/preview.mov' width=720></video>
+[![One Home - Preview](./assets/images/featured-image.png)](https://youtu.be/r4ENDyI4URg)
 
 ### Features 🚀
 
