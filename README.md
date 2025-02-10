@@ -1,6 +1,8 @@
-# One Home 🏠
+# <img src="./assets/icons/one-home-icon.png" width="24"> One Home
 
 `One Home` is a simple and modern `New Tab` page for your browser. It is designed to be a minimalistic and distraction-free start page for your browser, but customizable enough to be useful for everyone.
+
+<img src="./assets/images/featured-image.png" alt="One Home" width="720">
 
 ### Features 🚀
 
@@ -15,9 +17,9 @@ View the [CHANGELOG.md](CHANGELOG.md) file to see the changes made in each versi
 
 ## Direct Installation 🚀
 
-You can install `One Home` directly from the Chrome Web Store.
+You can download `extension.zip` from the [Releases](https://github.com/logicdose/One-Home/releases) page and install it in your browser.
 
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/one-home?label=One%20Home&logo=google-chrome&style=for-the-badge)](https://chrome.google.com/webstore/detail/one-home/)
+[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/logicdose/One-Home/total?style=for-the-badge)](https://github.com/logicdose/One-Home/releases)
 
 ## Development 🛠️
 
