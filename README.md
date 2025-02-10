@@ -2,7 +2,7 @@
 
 `One Home` is a simple and modern `New Tab` page for your browser. It is designed to be a minimalistic and distraction-free start page for your browser, but customizable enough to be useful for everyone.
 
-[![One Home - Preview](./assets/images/featured-image.png)](https://youtu.be/r4ENDyI4URg)
+https://githubusercontent.com/logicdose/One-Home/refs/heads/main/assets/videos/preview.mov
 
 ### Features 🚀
 
