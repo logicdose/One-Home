@@ -7,6 +7,7 @@ import { ImageRounded } from '@mui/icons-material';
 import SearchImageApi from '../../storage/apis/search-image.api';
 
 export default function SearchEngine() {
+
     // State
     const editMode = useAppSelector((state) => state.edit.editMode)
     const showSearchImage = useAppSelector((state) => state.config.showSearchImage)
@@ -73,7 +74,7 @@ export default function SearchEngine() {
     return (
         <div className='search-engine'>
             <Spacer height={16} />
-            {showSearchImage && (
+            {(showSearchImage) && (
                 <div className='logo'>
                     {image ? (
                         <img src={image} alt='One Home' />
@@ -126,8 +127,6 @@ export default function SearchEngine() {
                         value={searchText}
                         onChange={(e) => setSearchText(e.target.value)}
                         onKeyDown={(e) => {
-                            console.log(e.key)
-
                             // If holding `Ctrl` key and press `Enter`
                             if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
                                 e.preventDefault()

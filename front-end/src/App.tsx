@@ -48,7 +48,7 @@ function App() {
           <div className='app-content'>
             <Spacer height={128} />
             <SearchEngine />
-            <Spacer height={64} />
+            <Spacer height={32} />
             <Shortcuts />
             <Spacer height={128} />
           </div>
@@ -56,9 +56,7 @@ function App() {
       </div>
 
       {/* Edit Mode */}
-      <div className='edit-mode-overlay-container'>
-        <EditModeOverlay />
-      </div>
+      <EditModeOverlay />
     </>
   )
 }

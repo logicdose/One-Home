@@ -1,5 +1,14 @@
-.edit-mode-overlay,
-.edit-mode-background-picker {
+.edit-mode-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 82px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0) 100%);
+  opacity: 0.99;
+}
+
+.edit-mode-button {
   position: fixed;
   top: 0;
   right: 0;
@@ -13,12 +22,12 @@
   padding: 24px;
 }
 
-.edit-mode-overlay.active {
+.edit-mode-button.active {
   top: 12px;
   right: 12px;
 }
 
-.edit-mode-overlay button,
+.edit-mode-button button,
 .edit-mode-background-picker button {
   width: 50px;
   height: 50px;
@@ -31,55 +40,67 @@
   transition: background-color 0.25s;
 }
 
-.edit-mode-overlay.active button,
+.edit-mode-button.active button,
 .edit-mode-background-picker button {
   background-color: var(--color-surface-dark);
   color: var(--color-text);
 }
 
-.edit-mode-background-picker {
-  right: 12px;
-  top: 96px;
-  display: none;
-}
-
-.edit-mode-background-picker button {
-  border-radius: 12px;
-}
-
-.edit-mode-background-picker.active {
-  display: flex;
-}
-
-.edit-mode-background-picker svg {
-  width: 24px;
-  height: 24px;
-}
-
 .edit-mode-toolbar-container {
-  width: 100%;
   height: 42px;
   position: fixed;
-  bottom: -42px;
+  top: -42px;
   left: 0;
-  right: 0;
   padding: 0 18px;
   opacity: 0;
   transition: 0.25s ease-in-out;
 }
 
 .edit-mode-toolbar-container.active {
-  bottom: 18px;
+  top: 18px;
   opacity: 1;
 }
 
 .edit-mode-toolbar-container .toolbar {
   background-color: var(--color-surface-dark);
-  width: 100%;
   height: 42px;
   border-radius: 12px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   padding: 0 16px;
+  user-select: none;
+}
+
+.edit-mode-toolbar-container .toolbar .background-picker {
+  background-color: transparent;
+  color: var(--color-text-light);
+  border: none;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.25s;
+}
+
+.edit-mode-toolbar-container .toolbar .background-picker {
+  right: 12px;
+  top: 96px;
+  display: flex;
+}
+
+.edit-mode-toolbar-container .toolbar .background-picker button {
+  border-radius: 8px;
+  height: 32px;
+  padding: 0 8px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-surface);
+}
+
+.edit-mode-toolbar-container .toolbar .background-picker svg {
+  width: 20px;
+  height: 20px;
 }

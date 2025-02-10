@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## v0.2.2
+
+**Released:** 2025 Feb, 10
+
+- Improved `Styles, scrollbars` and more.
+
 ### v0.2.1
 
 **Released:** 2025 Feb, 10

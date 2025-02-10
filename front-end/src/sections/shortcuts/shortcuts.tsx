@@ -183,7 +183,7 @@ export default function Shortcuts() {
                                 {/* Edit Mode Overlay */}
                                 {editMode && (
                                     <div
-                                        className={"edit-mode-overlay " + (dragItem ? "dragging" : "")}
+                                        className={"overlay " + (dragItem ? "dragging" : "")}
                                         onPointerDown={(e) => {
                                             setDragItem(shortcut);
 

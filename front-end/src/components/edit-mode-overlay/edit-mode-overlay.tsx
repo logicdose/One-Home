@@ -6,6 +6,7 @@ import SearchImageApi from "../../storage/apis/search-image.api"
 import Switch from "../../widgets/switch/switch"
 import Spacer from "../../widgets/spacer"
 import { setShowSearchImage } from "../../states/config-state"
+import { useEffect } from "react"
 
 export default function EditModeOverlay() {
     // State
@@ -14,12 +15,48 @@ export default function EditModeOverlay() {
     const showSearchImage = useAppSelector((state) => state.config.showSearchImage)
     const dispatch = useAppDispatch()
 
+    // Listen key events
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            // Ignore shortcuts if an input or textarea is focused
+            if (document.activeElement instanceof HTMLInputElement || document.activeElement instanceof HTMLTextAreaElement) {
+                return;
+            }
+
+            if (e.key === 'e') {
+                dispatch(setEditMode(!editMode))
+                e.preventDefault()
+            }
+
+            if (e.key === 'Escape') {
+                dispatch(setEditMode(false))
+                e.preventDefault()
+            }
+        }
+
+        window.addEventListener('keydown', handleKeyDown)
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown)
+        }
+    }, [editMode])
+
+
+
     // Render
     return (
         <>
+            {/* Edit Mode Overlay */}
+            <div
+                className={"edit-mode-overlay"}
+                style={{
+                    display: editMode ? 'block' : 'none'
+                }}
+            />
+
             {/* Edit Button */}
             <div
-                className={'edit-mode-overlay' + (editMode ? ' active' : '')}
+                className={'edit-mode-button' + (editMode ? ' active' : '')}
             >
                 <button
                     onClick={() => {
@@ -28,57 +65,6 @@ export default function EditModeOverlay() {
                 >
                     {editMode ? <CheckRounded /> : <EditRounded />}
                 </button>
-            </div>
-
-            {/* Background Selection */}
-            <div
-                className={"edit-mode-background-picker" + (editMode ? ' active' : '')}
-            >
-                <button
-                    onClick={() => {
-                        // Pick background image
-                        const input = document.createElement('input')
-                        input.type = 'file'
-                        input.accept = 'image/*'
-
-                        input.onchange = async () => {
-                            const file = input.files?.item(0)
-                            if (!file) {
-                                return
-                            }
-
-                            const reader = new FileReader()
-                            reader.onload = async () => {
-                                const image = reader.result as string
-                                console.log("Selected image", image)
-
-                                // Save image
-                                await SearchImageApi.saveBackgroundImage(image)
-
-                                // Set Image
-                                dispatch(setAppBackground(image))
-                            }
-
-                            reader.readAsDataURL(file)
-                        }
-
-                        input.click()
-                    }}
-                >
-                    <AddPhotoAlternateRounded />
-                </button>
-
-                {appBackground && (
-                    <button
-                        onClick={() => {
-                            // Remove image
-                            SearchImageApi.removeBackgroundImage()
-                            dispatch(setAppBackground(undefined))
-                        }}
-                    >
-                        <HideImageRounded />
-                    </button>
-                )}
             </div>
 
             {/* Toolbar */}
@@ -91,6 +77,53 @@ export default function EditModeOverlay() {
                     <Switch checked={showSearchImage} onChange={(checked) => {
                         dispatch(setShowSearchImage(checked))
                     }} />
+
+                    {/* Background Selection */}
+                    <Spacer width={24} />
+                    <div className="background-picker">
+                        <button
+                            onClick={() => {
+                                if (appBackground) {
+                                    // Remove image
+                                    SearchImageApi.removeBackgroundImage()
+                                    dispatch(setAppBackground(undefined))
+                                    return;
+                                }
+
+                                // Pick background image
+                                const input = document.createElement('input')
+                                input.type = 'file'
+                                input.accept = 'image/*'
+
+                                input.onchange = async () => {
+                                    const file = input.files?.item(0)
+                                    if (!file) {
+                                        return
+                                    }
+
+                                    const reader = new FileReader()
+                                    reader.onload = async () => {
+                                        const image = reader.result as string
+                                        console.log("Selected image", image)
+
+                                        // Save image
+                                        await SearchImageApi.saveBackgroundImage(image)
+
+                                        // Set Image
+                                        dispatch(setAppBackground(image))
+                                    }
+
+                                    reader.readAsDataURL(file)
+                                }
+
+                                input.click()
+                            }}
+                        >
+                            {appBackground ? <HideImageRounded /> : <AddPhotoAlternateRounded />}
+                            <Spacer width={6} />
+                            {appBackground ? 'Remove Background' : 'Pick Background'}
+                        </button>
+                    </div>
                 </div>
             </div>
         </>
